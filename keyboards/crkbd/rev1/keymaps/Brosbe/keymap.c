@@ -102,7 +102,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 #ifdef OLED_ENABLE
-#include <image.c>
+#include "image.c"
 bool oled_task_user()
 {
     oled_advance_page(false);
