@@ -11,7 +11,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_NO,    LT(6,KC_Z),    KC_X,    KC_C,    KC_D,    KC_V,                         KC_K,    KC_H,  KC_COMM,  KC_DOT, KC_SLSH,  KC_NO,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          MO(4), XXXXXXX, LT(3,KC_SPC), LT(1, KC_TAB), MO(2), MO(5)
+                                          MO(4), MO(5), LT(3,KC_SPC), LT(1, KC_TAB), MO(2), XXXXXXX
                                       //`--------------------------'  `--------------------------'
 
   ),
@@ -78,9 +78,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [6] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,   KC_NO,
+      XXXXXXX,  UC_WIN, UC_LINX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,   KC_NO,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, RALT(KC_E), RALT(KC_Q), RALT(KC_P), RALT(KC_W),   KC_NO,
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, UC(0X00E9), UC(0X00E4), UC(0X00F6), UC(0X00E5),   KC_NO,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,   KC_NO,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
@@ -105,8 +105,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #include "image.c"
 bool oled_task_user()
 {
-    oled_advance_page(false);
-    oled_clear();
 
     if(is_keyboard_master())
     {
@@ -115,10 +113,16 @@ bool oled_task_user()
     }
     else
     {
-        renderLogo();
+        return;
     }
 
     return false;
+}
+
+void keyboard_post_init_user(void)
+{
+    //code to start the first render of the oled here
+    return;
 }
 
 #endif
