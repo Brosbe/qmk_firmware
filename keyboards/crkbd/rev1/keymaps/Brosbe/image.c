@@ -72,15 +72,13 @@ static const char PROGMEM macro_layer_icon_bottom[] = {// 'Macro Top', 11x16px
 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x88, 0x88, 0xc8, 0xc8, 0xc8, 0xc0, 0xf0, 0xfc, 0xfe, 0xff, 
 0xff, 0x1f, 0x1f, 0x7f, 0x7f, 0xff};
 
-static const char PROGMEM nav_layer_icon[] = {// 'nav_layer', 32x32px
-0x00, 0x00, 0xf0, 0x18, 0x0c, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04,
-0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x0c, 0x18, 0xf0, 0x00, 0x00,
-0x00, 0x00, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0xfc, 0xfe, 0xfe, 0x9f, 0x0f,
-0x0f, 0x9f, 0xfe, 0xfe, 0xfc, 0xf0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xff, 0x00, 0x00,
-0x00, 0x00, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03, 0x07, 0x1f, 0x7f, 0xff,
-0xff, 0x7f, 0x1f, 0x07, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xff, 0x00, 0x00,
-0x00, 0x00, 0x0f, 0x18, 0x30, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x30, 0x18, 0x0f, 0x00, 0x00};
+static const char PROGMEM nav_layer_icon_top[] = {// 'nav_top', 11x16px
+0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 
+0xf0, 0xfc, 0xfe, 0xfe, 0x9f, 0x0f};
+
+static const char PROGMEM nav_layer_icon_bottom[] = {// 'nav_bottom', 11x16px
+0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03, 0x07, 0x1f, 0x7f, 0xff, 0x20, 0x20, 0x20, 0x20, 0x20, 
+0x20, 0x20, 0x20, 0x20, 0x20, 0x20};
 
 static const char PROGMEM inter_layer_icon[] = {// 'inter_layer_full', 22x32px
 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x84, 0x84, 0x84, 0x84, 0x84, 0x04, 0x04, 
@@ -114,93 +112,190 @@ static const char PROGMEM mod_icon[] = {// 'mod_small', 16x16px
 0x00, 0xf8, 0x0c, 0x06, 0x02, 0xe2, 0x42, 0x82, 0x82, 0x42, 0xe2, 0x02, 0x06, 0x0c, 0xf8, 0x00,
 0x00, 0x1f, 0x30, 0x60, 0x40, 0x47, 0x40, 0x40, 0x40, 0x40, 0x47, 0x40, 0x60, 0x30, 0x1f, 0x00};
 
+static char screen[512];
+
+//le big yoink
+static unsigned char lookup_bytes[16] = {
+0x0, 0x8, 0x4, 0xc, 0x2, 0xa, 0x6, 0xe,
+0x1, 0x9, 0x5, 0xd, 0x3, 0xb, 0x7, 0xf, };
+
+uint8_t reverse(uint8_t n) {
+   return (lookup[n&0b1111] << 4) | lookup[n>>4];
+}
+//thanks to stackoverflow for this kind of stuff
+
 static void renderLogo(void){
     oled_write_raw_P(murkoff_logo, sizeof(murkoff_logo));
 }
 
+// static void merge_arrays(const char array_1[], const char array_2[], char array_3[], char result[], int image_1_length, int image_2_length){
 
-static void merge_arrays(const char array_1[], const char array_2[], char array_3[], char result[], int image_1_length, int image_2_length){
+//     int new_length = image_1_length + image_2_length;
 
-    int new_length = image_1_length + image_2_length;
+//     int i;
+//     for(i = 0; i < image_1_length; i++)
+//     {
+//         result[i] = array_1[i];
+//     }
 
-    int i;
-    for(i = 0; i < image_1_length; i++)
-    {
-        result[i] = array_1[i];
-    }
+//     int j;
 
-    int j;
+//     for(i = 0, j = image_1_length; j < new_length; i++, j++)
+//     {
+//         result[j] = array_2[i];
+//     }
 
-    for(i = 0, j = image_1_length; j < new_length; i++, j++)
-    {
-        result[j] = array_2[i];
-    }
+//     for(i = 0; j < new_length + 128; i++, j++)
+//     {
+//         result[j] = array_3[i];
+//     }
 
-    for(i = 0; j < new_length + 128; i++, j++)
-    {
-        result[j] = array_3[i];
-    }
+// }
 
-}
-
-static void add_default_small_icons(char modifiers, char output[]){
-    int i = 0;
+static void add_default_small_icons(char modifiers, int screen_index){
+    int i = screen_index;
     int j = 0;
 
     for(unsigned char loop = 0; loop < 2; loop++)
     {
         for(unsigned char l = 0; l < 16; i++, l++, j++)
         {
-            output[i] =  modifiers & MOD_MASK_SHIFT ? shift_icon[j] : 0x00;
-            output[i+16] =  modifiers & MOD_MASK_CTRL ? ctrl_icon[j] : 0x00;
-            output[i+64] =  modifiers & MOD_MASK_ALT ? alt_icon[j] : 0x00;
-            output[i+80] =  modifiers & MOD_MASK_GUI ? mod_icon[j] : 0x00;
+            screen[i] =  modifiers & MOD_MASK_SHIFT ? shift_icon[j] : 0x00;
+            screen[i+16] =  modifiers & MOD_MASK_CTRL ? ctrl_icon[j] : 0x00;
+            screen[i+64] =  modifiers & MOD_MASK_ALT ? alt_icon[j] : 0x00;
+            screen[i+80] =  modifiers & MOD_MASK_GUI ? mod_icon[j] : 0x00;
         }
-        i = 32;
+        i = screen_index + 32;
+    }
+}
+
+static void render_two_part_icon(const char top[], const char bottom[], int screen_index){
+    unsigned char i,j,k;
+    int l;
+    k = sizeof(home_layer_icon_top) >> 1;
+
+    for(i=0, l=screen_index,j = 21; i < k; i++, l++, j--)
+    {
+        screen[l] = top[i];
+        screen[l+11] = top[j];
+        screen[l+32] = top[i+11];
+        screen[l+43] = top[j-11];
+    }
+
+    for(i=0, l=screen_index + 64, l=21; i < k; i++, l++, j--)
+    {
+        screen[l] = bottom[i];
+        screen[l+11] = bottom[j];
+        screen[l+32] = bottom[i+11];
+        screen[l+43] = bottom[j-11];
+    }
+}
+
+static void render_one_part_icon(const char icon[], int screen_index){
+    unsigned char i,j,k;
+    int l;
+    k = sizeof(home_layer_icon_top) >> 1;
+
+    for(i=0, l=screen_index,j = 21; i < k; i++, l++, j--)
+    {
+        screen[l] = icon[i];
+        screen[l+11] = icon[j];
+        screen[l+32] = icon[i+11];
+        screen[l+43] = icon[j-11];
+    }
+    
+    for(i=0, l=screen_index + 64,j = 21; i < k; i++, l++, j--)
+    {
+        screen[l] = reverse(icon[i]);
+        screen[l+11] = reverse(icon[j]);
+        screen[l+32] = reverse(icon[i+11]);
+        screen[l+43] = reverse(icon[j-11]);
+    }
+}
+
+static void render_big_icon(const char icon[], screen_index){
+    unsigned char i,j,m;
+    m=0;
+    k = sizeof(inter_layer_icon);
+    int l = screen_index;
+
+
+    for(i=0, j=0; i < k; i++, j++, l++){
+        if(j == 21)
+        {
+            m++;
+            j = 0;
+            l = screen_index + 32 * m;
+        }
+        screen[l] = icon[i];
+    }
+}
+
+extern void set_layer_icon(int layer)
+{
+    int image_length = sizeof(murkoff_logo);
+    switch(layer){
+        case 1:
+            render_one_part_icon(prog_layer_icon, image_length);
+            break;
+        case 2:
+            render_two_part_icon(num_layer_icon, image_length);
+            break;
+        case 3:
+            render_big_icon(func_layer_icon, image_length);
+            break;
+        case 4:
+            render_two_part_icon(macro_layer_icon_top, macro_layer_icon_bottom, image_length);
+            break;
+        case 5:
+            render_two_part_icon(nav_layer_icon_top, nav_layer_icon_bottom, image_length);
+            break;
+        case 6:
+            render_big_icon(inter_layer_icon, image_length);
+            break;
+        case 7:
+            render_big_icon(gaming_layer_icon, image_length);
+            break;
+        default:
+            render_two_part_icon(home_layer_icon_top, home_layer_icon_bottom, image_length);
+            //render_chimney()
+            break;
     }
 }
 
 extern void show_oled(int layer, char modifiers){
 
-        int image_length = sizeof(murkoff_logo);
-        int icons_size = sizeof(mod_icon) * 4;
-        char image[(image_length * 2) + icons_size];
+    set_layer_icon(layer);
+    add_default_small_icons(modifiers, modifiers_image);
+    oled_write_raw_P(screen, sizeof(screen));
+}
 
-        char modifiers_image[sizeof(mod_icon)*4];
+extern void init_oled_layout(){
+    
+    int i = 0;
 
-        add_default_small_icons(modifiers, modifiers_image);
-
-        switch(layer){
-            case 1:
-                merge_arrays(murkoff_logo, prog_layer_icon, modifiers_image, image, image_length, image_length);
-                break;
-            case 2:
-                merge_arrays(murkoff_logo, num_layer_icon, modifiers_image, image, image_length, image_length);
-                break;
-            case 3:
-                merge_arrays(murkoff_logo, func_layer_icon, modifiers_image, image, image_length, image_length);
-                break;
-            case 4:
-                merge_arrays(murkoff_logo, macro_layer_icon, modifiers_image, image, image_length, image_length);
-                break;
-            case 5:
-                merge_arrays(murkoff_logo, nav_layer_icon, modifiers_image, image, image_length, image_length);
-                break;
-            case 6:
-                merge_arrays(murkoff_logo, inter_layer_icon, modifiers_image, image, image_length, image_length);
-                break;
-            case 7:
-                merge_arrays(murkoff_logo, gaming_layer_icon, modifiers_image, image, image_length, image_length);
-                break;
-            default:
-                merge_arrays(murkoff_logo, home_layer_icon, modifiers_image, image, image_length, image_length);
-                break;
-        }
+    for(i = 0; i < sizeof(murkoff_logo); i++)
+    {
+        screen[i] = murkoff_logo[i];
+    }
 
 
+    for(int j = 0, int k = sizeof(corner)-1; j < sizeof(corner) >> 1; j++, k--, i++)
+    {
+        screen[i] = corner[j];
+        screen[i+27] = corner[k-5];
+        screen[i+32] = corner[k];
+        screen[i+59] = corner[i+5];
+    }
 
+    for(int j = 0, int k = sizeof(corner)-1, i=64; j < sizeof(corner) >> 1; j++, k--, i++)
+    {
+        screen[i] = corner[j+5];
+        screen[i+27] = corner[k-5];
+        screen[i+32] = reverse(corner[j]);
+        screen[i+59] = reverse(corner[k-5]);
+    }
 
-        oled_write_raw_P(image, sizeof(image));
-
-
+    show_oled(0,0);
+        
 }
