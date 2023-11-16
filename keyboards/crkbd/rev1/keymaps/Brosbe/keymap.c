@@ -101,28 +101,28 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   )
 };
 
+static bool is_master;
+
 #ifdef OLED_ENABLE
 #include "image.c"
 bool oled_task_user()
 {
 
-    if(is_keyboard_master())
+    if(is_master)
     {
     char mods = get_mods();
     show_oled(get_highest_layer(layer_state), mods);
     }
-    else
-    {
-        return;
-    }
+
 
     return false;
 }
 
 void keyboard_post_init_user(void)
 {
-    //code to start the first render of the oled here
-    return;
+    is_master = is_keyboard_master();
+    if(is_master)init_oled_layout();
+    else renderLogo();
 }
 
 #endif
