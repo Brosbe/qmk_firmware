@@ -3,52 +3,52 @@
 oled_rotation_t oled_init_user(oled_rotation_t rotation) { return OLED_ROTATION_270; }
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [0] = LAYOUT_split_3x6_3(
+    [0] = LAYOUT_split_3x6_3(//home layer
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-       KC_NO,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                         KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN,  KC_NO,
+        KC_NO,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                         KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN,  KC_NO,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_NO,    KC_A,    KC_R,    KC_S,    LSFT_T(KC_T),    KC_G,                         KC_M,    LSFT_T(KC_N),    KC_E,    KC_I,   KC_O,    KC_NO,
+        KC_NO,    KC_A,    KC_R,    KC_S, LSFT_T(KC_T),    KC_G,                 KC_M,   LSFT_T(KC_N),    KC_E,    KC_I,   KC_O,    KC_NO,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_NO,    LT(6,KC_Z),    KC_X,    KC_C,    KC_D,    KC_V,                         KC_K,    KC_H,  KC_COMM,  KC_DOT, KC_SLSH,  KC_NO,
+        KC_NO, LT(6,KC_Z), KC_X,    KC_C,    KC_D,    KC_V,                         KC_K,    KC_H,  KC_COMM,  KC_DOT, KC_SLSH,  KC_NO,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           MO(4), MO(5), LT(3,KC_SPC), LT(1, KC_TAB), MO(2), XXXXXXX
                                       //`--------------------------'  `--------------------------'
 
   ),
 
-    [1] = LAYOUT_split_3x6_3(
+    [1] = LAYOUT_split_3x6_3(//symbol layer
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-       KC_NO, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX,   KC_LT,   KC_GT,  XXXXXXX, XXXXXXX, KC_NO,
+      KC_NO, KC_QUOT,   KC_LT,   KC_GT,  KC_DQUO,  KC_DOT,                      KC_AMPR, KC_UNDS, KC_LBRC, KC_RBRC, KC_PERC, KC_NO,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_NO, KC_QUES, KC_PIPE, KC_AMPR,  KC_EXLM, XXXXXXX,                       KC_DQUO, KC_LBRC, KC_RBRC, KC_BSLS, XXXXXXX, KC_NO,
+      KC_NO, KC_EXLM, KC_PMNS, KC_PLUS, KC_PEQL, KC_HASH,                       KC_PIPE, KC_COLN, KC_LPRN, KC_RPRN, KC_QUES, KC_NO,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_NO, KC_COLN, KC_AT  , KC_LPRN,  KC_RPRN, XXXXXXX,                      XXXXXXX,  KC_DLR, KC_PERC, XXXXXXX, XXXXXXX, KC_NO,
+      KC_NO, KC_CIRC, KC_PSLS, KC_PAST,  KC_BSLS,  KC_GRV,                      KC_TILD,  KC_DLR, KC_LCBR, KC_RCBR,   KC_AT, KC_NO,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX
+                                          XXXXXXX, XXXXXXX, KC_COMM,    XXXXXXX, XXXXXXX, XXXXXXX
                                       //`--------------------------'  `--------------------------'
   ),
 
-    [2] = LAYOUT_split_3x6_3(
+    [2] = LAYOUT_split_3x6_3(//number layer
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
        KC_NO,  XXXXXXX, XXXXXXX, KC_PEQL, XXXXXXX, XXXXXXX,                      XXXXXXX,    KC_7,    KC_8,    KC_9, XXXXXXX,   KC_NO,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_NO,   XXXXXXX, KC_PAST, KC_PPLS, KC_PDOT, XXXXXXX,                      XXXXXXX,    KC_4,    KC_5,    KC_6, XXXXXXX,   KC_NO,
+      KC_NO,   XXXXXXX, KC_PMNS, KC_PPLS, KC_PDOT, XXXXXXX,                      XXXXXXX,    KC_4,    KC_5,    KC_6, XXXXXXX,   KC_NO,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_NO,   XXXXXXX, KC_PSLS, KC_PMNS, XXXXXXX, KC_LALT,                      XXXXXXX,    KC_1,    KC_2,    KC_3,    KC_0,   KC_NO,
+      KC_NO,   XXXXXXX, KC_PSLS, KC_PAST, XXXXXXX, KC_LALT,                      XXXXXXX,    KC_1,    KC_2,    KC_3,    KC_0,   KC_NO,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX
+                                          XXXXXXX, XXXXXXX, KC_COMM,    XXXXXXX, XXXXXXX, XXXXXXX
                                       //`--------------------------'  `--------------------------'
   ),
 
-    [3] = LAYOUT_split_3x6_3(
+    [3] = LAYOUT_split_3x6_3(//action key layer
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,   KC_NO,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  KC_TAB,  KC_ESC,                      KC_LGUI, KC_BSPC,  KC_ENT, XXXXXXX, XXXXXXX,   KC_NO,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX, KC_LCTL, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX,  KC_DEL, XXXXXXX, XXXXXXX, XXXXXXX,   KC_NO,
+      XXXXXXX, KC_LCTL, KC_LALT, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX,  KC_DEL, XXXXXXX, XXXXXXX, XXXXXXX,   KC_NO,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, KC_LALT, XXXXXXX
+                                          XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX
                                       //`--------------------------'  `--------------------------'
   ),
 

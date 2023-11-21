@@ -20,9 +20,13 @@ static const char PROGMEM home_layer_icon_bottom[] = {// 'home bottom', 11x16px
 0x00, 0x00, 0x00, 0xff, 0xff, 0xc7, 0xc7, 0xff, 0xff, 0x0f, 0x0f, 0x20, 0x20, 0x20, 0x23, 0x23,
 0x23, 0x23, 0x23, 0x23, 0x20, 0x20};
 
-static const char PROGMEM prog_layer_icon[] ={// 'prog_part', 11x16px
-0x04, 0x04, 0x04, 0x04, 0x04, 0xc4, 0xe4, 0x64, 0x24, 0x04, 0x04, 0x00, 0x00, 0x80, 0x80, 0xc0,
-0x7f, 0x3f, 0x00, 0x00, 0x00, 0x00};
+static const char PROGMEM sym_layer_icon[] ={// 'sym_layer_icon', 22x32px
+0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0xf4, 0xf4, 0x04, 0x04, 0x04, 0x04, 0x04,
+0xf4, 0xf4, 0x04, 0x04, 0x04, 0x04, 0x00, 0x00, 0x00, 0x18, 0x18, 0x18, 0x18, 0xf8, 0xff, 0x1f,
+0x18, 0x18, 0x18, 0x98, 0xf8, 0x7f, 0x1f, 0x18, 0x18, 0x18, 0x18, 0x00, 0x00, 0x0c, 0x0c, 0x0c,
+0x8c, 0xfc, 0x7f, 0x0f, 0x0c, 0x0c, 0x0c, 0x8c, 0xfc, 0x7f, 0x0f, 0x0c, 0x0c, 0x0c, 0x0c, 0x00,
+0x00, 0x00, 0x20, 0x20, 0x20, 0x20, 0x27, 0x27, 0x20, 0x20, 0x20, 0x20, 0x20, 0x27, 0x27, 0x20,
+0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20};
 
 static const char PROGMEM num_layer_icon[] = {// 'num_ layer_full', 22x32px
 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04,
@@ -170,27 +174,27 @@ static void render_two_part_icon(const char top[], const char bottom[], int scre
     }
 }
 
-static void render_one_part_icon(const char icon[], int screen_index){
-    unsigned char i,j,k;
-    int l;
-    k = sizeof(prog_layer_icon) >> 1;
-
-    for(i=0, l=screen_index,j = 21; i < k; i++, l++, j--)
-    {
-        screen[l] = icon[i];
-        screen[l+11] = icon[j-11];
-        screen[l+32] = icon[i+11];
-        screen[l+43] = icon[j];
-    }
-
-    for(i=0, l=screen_index + 64,j = 21; i < k; i++, l++, j--)
-    {
-        screen[l] = reverse(icon[i+11]);
-        screen[l+11] = reverse(icon[j]);
-        screen[l+32] = reverse(icon[i]);
-        screen[l+43] = reverse(icon[j-11]);
-    }
-}
+// static void render_one_part_icon(const char icon[], int screen_index){
+//     unsigned char i,j,k;
+//     int l;
+//     k = sizeof(macro_layer_icon_top) >> 1;
+//
+//     for(i=0, l=screen_index,j = 21; i < k; i++, l++, j--)
+//     {
+//         screen[l] = icon[i];
+//         screen[l+11] = icon[j-11];
+//         screen[l+32] = icon[i+11];
+//         screen[l+43] = icon[j];
+//     }
+//
+//     for(i=0, l=screen_index + 64,j = 21; i < k; i++, l++, j--)
+//     {
+//         screen[l] = reverse(icon[i+11]);
+//         screen[l+11] = reverse(icon[j]);
+//         screen[l+32] = reverse(icon[i]);
+//         screen[l+43] = reverse(icon[j-11]);
+//     }
+// }
 
 static void render_big_icon(const char icon[], int screen_index){
     unsigned char i,j,m;
@@ -215,7 +219,7 @@ void set_layer_icon(int layer)
     int image_index = sizeof(murkoff_logo) + 5;
     switch(layer){
         case 1:
-            render_one_part_icon(prog_layer_icon, image_index);
+            render_big_icon(sym_layer_icon, image_index);
             break;
         case 2:
             render_big_icon(num_layer_icon, image_index);
