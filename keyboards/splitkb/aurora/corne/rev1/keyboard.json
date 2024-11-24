@@ -10,8 +10,8 @@
         "mousekey": true,
         "bootmagic": true,
         "extrakey": true,
-        "oled": true,
-        "rgb_matrix": true
+        "oled": false,
+        "rgb_matrix": false
     },
     "community_layouts": [
         "split_3x6_3"
@@ -73,7 +73,7 @@
         "cols": ["B2", "B6", "B3", "B1", "F7", "F6"]
     },
     "encoder": {
-        "enabled": true,
+        "enabled": false,
         "rotary": [
             {"pin_a": "D4", "pin_b": "C6"}
         ]
@@ -106,6 +106,13 @@
                 "matrix_state": true
             }
         }
+    },
+    "ps2": {
+        "clock_pin": "D0",
+        "data_pin": "D1",
+        "driver": "vendor",
+        "enabled": true,
+        "mouse_enabled": true
     },
     "rgblight": {
         "led_count": 54,
