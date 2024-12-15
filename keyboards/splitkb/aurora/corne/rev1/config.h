@@ -16,20 +16,23 @@
 
 #pragma once
 
-// `SPLIT_HAND_PIN` can currently be defined in `info.json`,
-// but can't yet be given a value
-#define SPLIT_HAND_PIN F4
-
 // Not yet available in `info.json`
 #ifdef OLED_ENABLE
 #    define OLED_DISPLAY_128X32
 #    define SPLIT_OLED_ENABLE
 #endif
 
-// Not yet available in `info.json`
-#ifdef RGB_MATRIX_ENABLE
-#    define RGB_MATRIX_MAXIMUM_BRIGHTNESS 128
-#    define RGB_MATRIX_LED_COUNT 54
-#    define RGB_MATRIX_SPLIT { 27, 27 }
-#    define SPLIT_TRANSPORT_MIRROR
-#endif
+#define TAPPING_TERM 200
+
+/* Miryoku */
+#define BILATERAL_COMBINATIONS
+#define BILATERAL_COMBINATIONS_LIMIT_CHORD_TO_N_KEYS 4 /* GUI, Alt, Ctrl, Shift */
+#define BILATERAL_COMBINATIONS_DELAY_MODS_THAT_MATCH MOD_MASK_GUI
+#define BILATERAL_COMBINATIONS_DELAY_MATCHED_MODS_BY 120  /* ms */
+#define BILATERAL_COMBINATIONS_ALLOW_CROSSOVER_AFTER 80   /* ms */
+#define BILATERAL_COMBINATIONS_ALLOW_SAMESIDED_AFTER 500 /* ms */
+#define BILATERAL_COMBINATIONS_TYPING_STREAK_TIMEOUT 160  /* ms */
+#define BILATERAL_COMBINATIONS_TYPING_STREAK_MODMASK (~MOD_MASK_SHIFT)
+
+#define PS2_PIO_USE_PIO1
+#define PS2_MOUSE_ROTATE 180
