@@ -7,23 +7,31 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) { return OLED_ROTATION_
 
 const uint16_t PROGMEM nextPage[] = {KC_MPRV, KC_MNXT, COMBO_END};
 const uint16_t PROGMEM prevPage[] = {KC_MPLY, KC_MSTP, COMBO_END};
+const uint16_t PROGMEM devmodePage[] = {KC_MPRV, KC_MNXT, KC_MPLY, KC_MSTP, COMBO_END};
+
 uint_fast8_t currentLayer = 0;
 uint_fast8_t max_layer;
+bool devmode = false;
 
 enum combos {
   NEXT_PAGE,
   PREV_PAGE,
+
+  DEV_PAGE,
 };
 
 enum layers {
     _1,
     _2,
+    _3,
+
     _DEV
 };
 
 combo_t key_combos[] = {
     [NEXT_PAGE] = COMBO(nextPage, KC_NO),
-    [PREV_PAGE] = COMBO(prevPage, KC_NO)
+    [PREV_PAGE] = COMBO(prevPage, KC_NO),
+    [DEV_PAGE] = COMBO(devmodePage, KC_NO)
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -42,15 +50,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_MUTE, KC_NO,
         KC_VOLD, KC_VOLU
     ),
+    [_3] = LAYOUT(
+        MS_BTN3, KC_NO,
+        MS_BTN1, MS_BTN2
+    ),
     [_DEV] = LAYOUT(
-        QK_BOOT, KC_E,
-        KC_3,    KC_5
+        QK_BOOT, KC_NO,
+        KC_NO  , KC_NO
     )
 };
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
   switch(combo_index) {
     case NEXT_PAGE:
+      if(devmode) return;
       if (pressed) {
           currentLayer++;
           if(currentLayer > max_layer)
@@ -61,6 +74,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
       }
       break;
     case PREV_PAGE:
+      if(devmode) return;
       if (pressed) {
           currentLayer--;
           if(currentLayer > max_layer)
@@ -70,6 +84,21 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
           layer_move(currentLayer);
       }
       break;
+    case DEV_PAGE:
+      if(pressed)
+      {
+          if(devmode)
+          {
+              devmode = false;
+              layer_move(currentLayer);
+          }
+          else
+          {
+              devmode = true;
+              layer_move(_DEV);
+          }
+      }
+      break;
   }
 }
 
@@ -77,20 +106,23 @@ void keyboard_post_init_user(void) {
     //automatic calculation of matrix size.
     //I could do this with a constant, but I'm lazy as all hell so nah
     max_layer = sizeof(keymaps) >> 3;
-    max_layer--;
+    max_layer -= 2;
 }
 
 #ifdef OLED_ENABLE
 bool oled_task_user(void) {
-    // Host Keyboard Layer Status
+    //Host Keyboard Layer Status
     oled_write_P(PSTR("Layer"), false);
 
     switch (get_highest_layer(layer_state)) {
         case _1:
-            oled_write_P(PSTR("1\n"), false);
+            oled_write_P(PSTR("media\n"), false);
             break;
         case _2:
-            oled_write_P(PSTR("2\n"), false);
+            oled_write_P(PSTR("audio\n"), false);
+            break;
+        case _3:
+            oled_write_P(PSTR("mouse\n"), false);
             break;
         default:
             // Or use the write_ln shortcut over adding '\n' to the end of your string
