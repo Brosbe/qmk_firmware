@@ -63,7 +63,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 void process_combo_event(uint16_t combo_index, bool pressed) {
   switch(combo_index) {
     case NEXT_PAGE:
-      if(devmode) return;
+      if(devmode)
+      {
+        devmode = false;
+      }
       if (pressed) {
           currentLayer++;
           if(currentLayer > max_layer)
@@ -74,7 +77,10 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
       }
       break;
     case PREV_PAGE:
-      if(devmode) return;
+      if(devmode)
+      {
+        devmode = false;
+      }
       if (pressed) {
           currentLayer--;
           if(currentLayer > max_layer)
@@ -112,22 +118,38 @@ void keyboard_post_init_user(void) {
 #ifdef OLED_ENABLE
 bool oled_task_user(void) {
     //Host Keyboard Layer Status
-    oled_write_P(PSTR("Layer"), false);
+    #include "image.c"
+    int layer = get_highest_layer(layer_state);
 
-    switch (get_highest_layer(layer_state)) {
-        case _1:
-            oled_write_P(PSTR("media\n"), false);
-            break;
-        case _2:
-            oled_write_P(PSTR("audio\n"), false);
-            break;
-        case _3:
-            oled_write_P(PSTR("mouse\n"), false);
-            break;
-        default:
-            // Or use the write_ln shortcut over adding '\n' to the end of your string
-            oled_write_ln_P(PSTR("dev"), false);
+    if(layer == _DEV)
+    {
+        int above = currentLayer == _1 ? max_layer : currentLayer - 1;
+        int below = currentLayer == max_layer ? _1 : currentLayer + 1;
+        show_oled(_DEV, above, below);
+        return false;
     }
+
+    int above = layer == _1 ? max_layer : layer - 1;
+    int below = layer == max_layer ? _1 : layer + 1;
+
+    show_oled(layer, above, below);
+
+    //oled_write_P(PSTR("Layer"), false);
+
+    //switch (get_highest_layer(layer_state)) {
+    //    case _1:
+    //        oled_write_P(PSTR("media\n"), false);
+    //        break;
+    //    case _2:
+    //        oled_write_P(PSTR("audio\n"), false);
+    //        break;
+    //    case _3:
+    //        oled_write_P(PSTR("mouse\n"), false);
+    //        break;
+    //    default:
+    //        // Or use the write_ln shortcut over adding '\n' to the end of your string
+    //        oled_write_ln_P(PSTR("dev"), false);
+    //}
     return false;
 }
 #endif
