@@ -55,7 +55,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         MS_BTN1, MS_BTN2
     ),
     [_DEV] = LAYOUT(
-        QK_BOOT, KC_NO,
+        QK_BOOT, QK_RBT,
         KC_NO  , KC_NO
     )
 };
