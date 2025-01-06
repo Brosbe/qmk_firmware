@@ -3,9 +3,12 @@
 #    include "keymap.h"
 #endif
 
-#define PS2_MOUSE_BTN_MIDDLE    2
+#define PS2_MOUSE_INIT_DELAY 2000
 
-#define PS2_MOUSE_SCROLL_BTN_MASK (1<<PS2_MOUSE_BTN_MIDDLE)
+#define PS2_MOUSE_USE_REMOTE_MODE
+
+#define PS2_MOUSE_X_MULTIPLIER 3
+#define PS2_MOUSE_Y_MULTIPLIER 3
 
 /* THIS FILE WAS GENERATED!
  *
@@ -17,15 +20,15 @@
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //base layer
     [0] = LAYOUT_split_3x6_3(
-        KC_NO, KC_Q, KC_W, KC_F, KC_P, KC_B,                                                KC_J, KC_L, KC_U, KC_Y, KC_COLN, KC_NO,
+        KC_NO, KC_Q, KC_W, KC_F, KC_P, KC_B,                                                KC_J, KC_L, KC_U, KC_Y, KC_SCLN, KC_NO,
         KC_NO, LGUI_T(KC_A), LALT_T(KC_R), LCTL_T(KC_S), LSFT_T(KC_T), KC_G,                KC_M, RSFT_T(KC_N), RCTL_T(KC_E), RALT_T(KC_I), RGUI_T(KC_O), KC_NO,
         KC_NO, KC_Z, KC_X, KC_C, KC_D, KC_V,                                                KC_K, KC_H, KC_COMM, KC_DOT, KC_SLSH, KC_NO,
-               MO(4), KC_BSPC, LT(3,KC_SPC),                                                LT(1,KC_TAB), LT(2,KC_ESC), KC_RGUI),
+               KC_NO, KC_BSPC, LT(3,KC_SPC),                                              LT(1,KC_TAB), LT(2,KC_ESC), KC_RGUI),
     //symbol layer
     [1] = LAYOUT_split_3x6_3(
         KC_NO, KC_GRV, LSFT(KC_LT), LSFT(KC_GT), LSFT(KC_AMPR), LSFT(KC_HASH),              LSFT(KC_DLR), LSFT(KC_LPRN), LSFT(KC_CIRC), LSFT(KC_RPRN), LSFT(KC_PERC), KC_NO,
         KC_NO, LSFT(KC_AT), KC_PMNS, KC_PPLS, KC_EQL, LSFT(KC_PIPE),                        LSFT(KC_QUOT), LSFT(KC_LCBR), LSFT(KC_COLN), LSFT(KC_RCBR), KC_BSLS, KC_NO,
-        KC_NO, KC_SLSH, KC_PSLS, LSFT(KC_PAST), KC_EXLM, KC_MINS,                           KC_QUOT, KC_LBRC, KC_UNDS, KC_RBRC, KC_SLSH, KC_NO,
+        KC_NO, KC_TILD, KC_PSLS, LSFT(KC_PAST), KC_EXLM, KC_MINS,                           KC_QUOT, KC_LBRC, KC_UNDS, KC_RBRC, KC_SLSH, KC_NO,
                                         KC_TRNS, KC_DEL, KC_TRNS,                           KC_TRNS, KC_TRNS, KC_TRNS),
     //num and fkey layer
     [2] = LAYOUT_split_3x6_3(
@@ -35,16 +38,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                          KC_TRNS, KC_TRNS, KC_TRNS,                                         KC_TRNS, KC_TRNS, KC_TRNS),
     //nav layer
     [3] = LAYOUT_split_3x6_3(
-        KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,                                           KC_NO, KC_RSFT, KC_NO, KC_PMNS, KC_NO, KC_NO,
+        KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,                                           KC_NO, KC_RSFT, KC_NO, KC_PMNS, QK_BOOT, KC_NO,
         KC_NO, LALT(KC_1), LALT(KC_2), LALT(KC_3), LALT(KC_4), LALT(KC_5),                  KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, KC_NO, KC_NO,
         KC_NO, LALT(KC_6), LALT(KC_7), LALT(KC_8), LALT(KC_9), LALT(KC_0),                  KC_HOME, KC_PGDN, KC_PGUP, KC_END, KC_NO, KC_NO,
-                                   KC_TRNS, KC_TRNS, KC_TRNS,                               LT(1,KC_ENT), KC_TRNS, KC_TRNS),
-    //mouse layer
-    [4] = LAYOUT_split_3x6_3(
-        KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,                                           KC_NO, KC_VOLD, KC_MUTE, KC_VOLU, KC_NO, KC_NO,
-        KC_NO, KC_NO,MS_BTN2,MS_BTN3,MS_BTN1,KC_NO,                                           KC_NO, KC_MPRV, KC_MPLY, KC_MNXT, KC_NO, KC_NO,
-        KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,                                           KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
-                       KC_TRNS, KC_TRNS, KC_TRNS,                                           KC_TRNS, KC_TRNS, KC_TRNS)
+                                   KC_TRNS, KC_TRNS, KC_TRNS,                               LT(1,KC_ENT), KC_TRNS, KC_TRNS)
 };
 
 enum combos {
@@ -58,7 +55,7 @@ enum combos {
     LAMBDA,
 };
 
-const uint16_t PROGMEM ycoln_ret[] = {KC_Y, KC_COLN, COMBO_END};
+const uint16_t PROGMEM ycoln_ret[] = {KC_Y, KC_SCLN, COMBO_END};
 const uint16_t PROGMEM qw_esc[] = {KC_Q, KC_W, COMBO_END};
 const uint16_t PROGMEM fu_quot[] = {KC_F, KC_U, COMBO_END};
 const uint16_t PROGMEM pl_quot[] = {KC_P, KC_L, COMBO_END};
