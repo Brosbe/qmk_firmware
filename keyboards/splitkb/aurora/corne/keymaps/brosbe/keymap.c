@@ -23,7 +23,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_NO, KC_Q, KC_W, KC_F, KC_P, KC_B,                                                KC_J, KC_L, KC_U, KC_Y, KC_SCLN, KC_NO,
         KC_NO, LGUI_T(KC_A), LALT_T(KC_R), LCTL_T(KC_S), LSFT_T(KC_T), KC_G,                KC_M, RSFT_T(KC_N), RCTL_T(KC_E), RALT_T(KC_I), RGUI_T(KC_O), KC_NO,
         KC_NO, KC_Z, KC_X, KC_C, KC_D, KC_V,                                                KC_K, KC_H, KC_COMM, KC_DOT, KC_SLSH, KC_NO,
-               KC_NO, KC_BSPC, LT(3,KC_SPC),                                              LT(1,KC_TAB), LT(2,KC_ESC), KC_RGUI),
+               MS_BTN3, KC_BSPC, LT(3,KC_SPC),                                              LT(1,KC_TAB), LT(2,KC_ESC), KC_RGUI),
     //symbol layer
     [1] = LAYOUT_split_3x6_3(
         KC_NO, KC_GRV, LSFT(KC_LT), LSFT(KC_GT), LSFT(KC_AMPR), LSFT(KC_HASH),              LSFT(KC_DLR), LSFT(KC_LPRN), LSFT(KC_CIRC), LSFT(KC_RPRN), LSFT(KC_PERC), KC_NO,
@@ -55,8 +55,8 @@ enum combos {
     LAMBDA,
 };
 
-const uint16_t PROGMEM ycoln_ret[] = {KC_Y, KC_SCLN, COMBO_END};
-const uint16_t PROGMEM qw_esc[] = {KC_Q, KC_W, COMBO_END};
+const uint16_t PROGMEM ycoln_ret[] = {KC_Y, KC_U, COMBO_END};
+const uint16_t PROGMEM qw_esc[] = {KC_F, KC_W, COMBO_END};
 const uint16_t PROGMEM fu_quot[] = {KC_F, KC_U, COMBO_END};
 const uint16_t PROGMEM pl_quot[] = {KC_P, KC_L, COMBO_END};
 const uint16_t PROGMEM xdot_lambda[] = {KC_X, KC_DOT, COMBO_END};
