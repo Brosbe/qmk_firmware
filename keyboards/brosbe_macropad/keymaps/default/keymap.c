@@ -24,6 +24,7 @@ enum layers {
     _1,
     _2,
     _3,
+    _4,
 
     _DEV
 };
@@ -53,6 +54,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_3] = LAYOUT(
         MS_BTN3, KC_NO,
         MS_BTN1, MS_BTN2
+    ),
+    [_4] = LAYOUT(
+        KC_PSCR, LSFT(KC_PSCR),
+        LCTL(KC_PSCR), LALT(KC_PSCR)
     ),
     [_DEV] = LAYOUT(
         QK_BOOT, QK_RBT,
